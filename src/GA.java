@@ -3,12 +3,12 @@ import java.util.Arrays;
 
 public class GA {
 
-	public static final double EXPECTED_VALUE = -9.8;
-	public static final int BIT_STRING_LENGTH = 9;
-	public static final int POPULATION = 10;
-	public static String[] digitsBinary = new String[10];
-	public static String[] operatorsBinary = new String[4];
-	public static String[] bitStrings = new String[POPULATION];
+	public static final double EXPECTED_VALUE = 19.5;			//The required value of arithmetic expression
+	public static final int BIT_STRING_LENGTH = 9;				//Number of operators + numbers in the arithmetic expression (must be odd)
+	public static final int POPULATION = 10;					//Size of initial generated population
+	public static String[] digitsBinary = new String[10];		//Binary representation of 0-9
+	public static String[] operatorsBinary = new String[4];		//Binary representatino of +, -. * and /
+	public static String[] bitStrings = new String[POPULATION];	//The actual population
 	
 	/**
 	 * @param args
@@ -17,46 +17,29 @@ public class GA {
 	public static void main(String[] args) {
 		
 		
-		final double CROSSOVER_RATE = 0.7;
-		final double MUTATION_RATE = 0.001*GA.BIT_STRING_LENGTH;		
+		final double CROSSOVER_RATE = 0.7;							
+		final double MUTATION_RATE = 0.001*GA.BIT_STRING_LENGTH;	//Probability increases with length of bit strings	
 		
-		double[] fitnessScores = new double[POPULATION];
+		double[] fitnessScores = new double[POPULATION];			//Fitness scores of the population
 		
 		//Initializing bit strings
 		for (int i = 0;i<POPULATION;i++)
-		{
 			bitStrings[i] = "";
-		}
 		
+		//Assigning binary representation of 0-9 to digitsBinary[]
 		for (int i = 0;i<10;i++)
-		{
 			digitsBinary[i] = StringOperations.StringLeftPadding(Integer.toBinaryString(i), 4);
-		}
 		
+		//Assigning binary representations of +, -, * and / (arbitrary selection)
 		operatorsBinary[0] = "1010";	//Add
 		operatorsBinary[1] = "1011";	//Subtract
 		operatorsBinary[2] = "1100";	//Multiply
 		operatorsBinary[3] = "1101";	//Divide
 		
-		//Generating a preset number (POPULATION) of random bit strings
+		//Generating a population of random bit strings
 		boolean previousWasOperator = true;
 		for (int j = 0;j<POPULATION;j++)
 		{
-			/*previousWasOperator = true;
-			for (int k = 0;k<BIT_STRING_LENGTH;k++)
-			{
-				if (previousWasOperator)
-				{
-					bitStrings[j] += digitsBinary[(int)(Math.random()*10)];
-					previousWasOperator = false;
-				}
-				else
-				{
-					bitStrings[j] += operatorsBinary[(int)(Math.random()*4)];
-					previousWasOperator = true;
-				}
-				
-			}*/
 			bitStrings[j] = generateBitString();
 			fitnessScores[j] = BitStringProperties.fitnessScore(bitStrings[j]);
 			if (fitnessScores[j] == 1/(Math.abs(GA.EXPECTED_VALUE)))
@@ -67,6 +50,7 @@ public class GA {
 			}
 		}
 		
+		//Performing crossovers and mutations until the desired result is obtained
 		outerloop:
 		while (true)
 		{
@@ -100,6 +84,7 @@ public class GA {
 			//System.out.println(fitnessScores[indexOfFirstChromosome]);
 			//System.out.println(fitnessScores[indexOfSecondChromosome]);
 			
+			//Discard bit strings with a fitness score of 0
 			if (fitnessScores[indexOfFirstChromosome] == 1/(Math.abs(GA.EXPECTED_VALUE)))
 			{
 				
@@ -114,6 +99,8 @@ public class GA {
 				fitnessScores[indexOfSecondChromosome] = BitStringProperties.fitnessScore(bitStrings[indexOfSecondChromosome]);
 				//System.out.println(fitnessScores[indexOfSecondChromosome]);
 			}
+			
+			//Discard one of two bit strings with identical fitness scores
 			if (fitnessScores[indexOfSecondChromosome] == fitnessScores[indexOfFirstChromosome])
 			{
 				bitStrings[indexOfSecondChromosome] = generateBitString();
@@ -121,6 +108,7 @@ public class GA {
 				//System.out.println(fitnessScores[indexOfSecondChromosome]);
 			}
 
+			//Found solution!
 			if (fitnessScores[indexOfFirstChromosome] == 0)
 			{
 				//System.out.println(fitnessScores[indexOfFirstChromosome]);
@@ -165,5 +153,5 @@ public class GA {
 		return output;
 		
 	}	
-	}
+}
 

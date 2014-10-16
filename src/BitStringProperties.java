@@ -1,8 +1,16 @@
 import java.util.Arrays;
 
-
+/**
+ * 
+ * This class contains methods for calculating properties and attributes of bit strings 
+ *
+ */
 public class BitStringProperties {
-	
+	/**
+	 * Calculates the fitness score of inputBitString, according to a predefined function.	
+	 * @param 					inputBitStringAny valid bit string
+	 * @return fitnessScore		Fitness Score of bit string
+	 */
 	public static double fitnessScore(String inputBitString)
 	{
 		double expectedResult = GA.EXPECTED_VALUE;
@@ -13,7 +21,11 @@ public class BitStringProperties {
 			}
 		return (1/Math.abs((expectedResult-calculatedResult)));
 	}
-	
+	/**
+	 * Parses a bit string to a double value by executing the arithmetic expression it represents.  
+	 * @param inputBitString	Any bit string
+	 * @return result			The final calculated value
+	 */
 	public static double ParseBitStringToResult(String inputBitString)
 	{
 		String temp = "";
@@ -109,7 +121,11 @@ public class BitStringProperties {
 		}
 		return result;
 	}
-	
+	/**
+	 * Generates a random bit string index with a selection probability proportional to the fitness score of the bit string
+	 * @param fitnessScores[]	An array of fitness scores
+	 * @return i				Index of chosen bit string
+	 */
 	public static int indexOfRouletteWheelSelection(double[] fitnessScores)
 	{
 		double sumOfFitnessScores = 0;
@@ -132,7 +148,11 @@ public class BitStringProperties {
 			}
 		}
 	}
-	
+	/**
+	 * Converts the input bit string to a an arithmetic expression (string)
+	 * @param inputBitString	Any bit string
+	 * @return output			Arithmetic expression represented by input bit string
+	 */
 	public static String bitStringToString(String inputBitString)
 	{
 		boolean previousWasOperator = true;

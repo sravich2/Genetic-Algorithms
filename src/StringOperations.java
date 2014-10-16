@@ -1,7 +1,15 @@
-
+/**
+ * 
+ * @author Sachin
+ * This classes contains methods that manipulate strings
+ */
 public class StringOperations {
 
-	
+	/**
+	 * @param x						Any input string
+	 * @param finalLengthOfString	The length to which given string is to be padded from the left, with 0s
+	 * @return paddedString 		Padded string
+	 */
 	public static String StringLeftPadding(String x, int finalLengthOfString)
 	{
 		String paddedString = "";
@@ -17,6 +25,11 @@ public class StringOperations {
 			return paddedString;
 		}
 	}
+	/**
+	 * @param a			Any bit string
+	 * @param b			Any bit string
+	 * @return output	The bit string obtained after ORing the input bit strings
+	 */
 	public static String bitwiseOr(String a, String b)
 	{
 		String output = "";
@@ -31,7 +44,11 @@ public class StringOperations {
 		
 		return output;
 	}
-	
+	/**
+	 * @param a			Any bit string
+	 * @param b			Any bit string
+	 * @return output	The bit string obtained after ANDing the input bit strings
+	 */
 	public static String bitwiseAnd(String a, String b)
 	{
 		a = StringLeftPadding(a, Math.max(a.length(), b.length()));
@@ -54,7 +71,11 @@ public class StringOperations {
 		}
 		return output;
 	}
-	//Flips bit at index n
+	/**
+	 * @param inputBitString	Any bit string
+	 * @param n 				Index of bit to be flipped
+	 * @return output			Bit string with bit at n flipped
+	 */
 	public static String flip(String a, int n)
 	{
 		String output = "";
@@ -75,6 +96,12 @@ public class StringOperations {
 	}
 	
 	//Swaps bit values of a and b from index n to the end of the bit strings
+	/**
+	 * @param a			Any bit string
+	 * @param b			Any bit string
+	 * @param n			The index starting from which bits are to swapped
+	 * @return output	The bit string obtained after swapping all bits of the two input bit strings starting from n to the end of the bit strings	
+	 */
 	public static String[] swap(String a, String b, int n)
 	{
 		String[] output = new String[2];
